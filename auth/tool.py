@@ -4,11 +4,11 @@ from functools import wraps
 
 
 def check(author_header):
-    if current_app.config['AUTH_USERNAME']:
+    if 'AUTH_USERNAME' in current_app.config:
         username = current_app.config['AUTH_USERNAME']
     else:
         username = 'admin'
-    if current_app.config['AUTH_PASSWORD']:
+    if 'AUTH_PASSWORD' in current_app.config:
         password = current_app.config['AUTH_PASSWORD']
     else:
         password = 'admin'
