@@ -1,6 +1,9 @@
-from flask import current_app, request, Response
+from flask import current_app, request, Response, redirect
 import base64
 from functools import wraps
+from bs4 import BeautifulSoup
+import requests
+import secrets
 
 
 def check(author_header):
@@ -28,3 +31,23 @@ def login_required(f):
             resp.headers['WWW-Authenticate'] = 'Basic realm="Login required"'
             return resp, 401
     return decorator
+
+
+def crawl_url(url):
+    resp = requests.get(url)
+    tree = BeautifulSoup(markup=resp.text, features="html5lib")
+    nodes = tree.find_all(name='span', attrs={'id': 'service-name-trending'})
+    count = 1
+    stack_text = '<ul>'
+    for node in nodes:
+        Stack = str(node)[(str(node).find('">') + 2): str(node).find('</')]
+        stack_text += '<li>' + str(count) + '- ' + Stack + '</li>'
+        count += 1
+    stack_text += '</ul>'
+    return stack_text
+
+
+def logout():
+    host = request.headers.get('Host')
+    url = 'http://' + secrets.token_urlsafe(16) + ':' + secrets.token_urlsafe(16) + '@' + host + '/logout'
+    return redirect(url)
