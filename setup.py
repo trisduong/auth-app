@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="authapp123",
+    name="auth",
     version="0.1.1",
     author="Tris",
     author_email="duongvantri1998@gmail.com",
