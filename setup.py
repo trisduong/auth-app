@@ -26,7 +26,7 @@ setuptools.setup(
         'click>=7.1.2',
         'Flask>=1.1.2',
         'html5lib>=1.1',
-        'idna=2.10',
+        'idna==2.10',
         'itsdangerous>=1.1.0',
         'Jinja2>=2.11.3',
         'MarkupSafe>=1.1.1',
