@@ -1,9 +1,8 @@
-from flask import current_app, request, Response, redirect
+from flask import current_app, request, Response
 import base64
 from functools import wraps
 from bs4 import BeautifulSoup
 import requests
-import secrets
 
 
 def check(author_header):
@@ -45,9 +44,3 @@ def crawl_url(url):
         count += 1
     stack_text += '</ul>'
     return stack_text
-
-
-def logout():
-    host = request.headers.get('Host')
-    url = 'http://' + secrets.token_urlsafe(16) + ':' + secrets.token_urlsafe(16) + '@' + host + '/logout'
-    return redirect(url)

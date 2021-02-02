@@ -1,5 +1,6 @@
-from flask import request, Blueprint
-from .tool import login_required, check, crawl_url, logout
+from flask import request, Blueprint, redirect
+from .tool import login_required, check, crawl_url
+import secrets
 
 app_auth = Blueprint('app_auth', __name__)
 
@@ -25,7 +26,9 @@ def crawl_trending():
 @app_auth.route('/logout')
 def logout():
     if check(request.headers.get('Authorization')):
-        return logout()
+        host = request.headers.get('Host')
+        url = 'http://' + secrets.token_urlsafe(16) + ':' + secrets.token_urlsafe(16) + '@' + host + '/logout'
+        return redirect(url)
     else:
         return 'You logout successful'
 
