@@ -29,9 +29,7 @@ def logout():
         return 'Success', 401
     elif check(request.headers.get('Authorization')):
         host = request.headers.get('Host')
-        print(host)
         url = 'http://' + secrets.token_urlsafe(16) + ':' + secrets.token_urlsafe(16) + '@' + host + '/logout'
-        print(url)
         return redirect(url)
     else:
         return 'Success'
